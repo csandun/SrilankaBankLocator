@@ -10,4 +10,15 @@
         tools:context="com.mikepenz.materialdrawer.app.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_path_string"
+        android:id="@+id/btSetpath"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
+
 </RelativeLayout>

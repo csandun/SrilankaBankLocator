@@ -46,6 +46,9 @@ public class mainActivity extends AppCompatActivity {
     private Drawer result = null;
     private MiniDrawer miniResult = null;
     private Crossfader crossFader;
+    DBHelper dBhelper;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,25 @@ public class mainActivity extends AppCompatActivity {
         //set the back arrow in the toolbar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle(R.string.drawer_item_mini_drawer);
+
+        ////////////////////experiment///////////
+
+        dBhelper = new DBHelper(this);
+        dBhelper.truncate();
+        Branch b = new Branch(001,"Main branch",6.905825,79.851470,"480, Galle Road,Colombo 3","011-7756000","011-4718148");
+        dBhelper.addBranch(b);
+        b = new Branch(002,"Pettah",6.937672,79.851277,"129, Main Street, Colombo 11","011-7756000","011-4718148");
+        dBhelper.addBranch(b);
+        b = new Branch(003,"Kandy",7.2955357,80.6355777,"480, Galle Road,Colombo 3","011-7756000","011-4718148");
+        dBhelper.addBranch(b);
+        b = new Branch(004,"Kattankudy",7.6836273,81.7246413,"480, Galle Road,Colombo 3","011-7756000","011-4718148");
+        dBhelper.addBranch(b);
+        b = new Branch(005,"Dehiwala",6.8618673,79.8615613,"28, Galle Road,Dehiwala","011-7756000","011-4718148");
+        dBhelper.addBranch(b);
+        b = new Branch(005,"Dehiwala",6.8618673,79.8615613,"28, Galle Road,Dehiwala","011-7756000","011-4718148");
+        dBhelper.addBranch(b);
+        /////////////////////////////////////
+
 
         // Create a few sample profile
         // NOTE you have to define the loader logic too. See the CustomApplication for more details
@@ -126,6 +148,8 @@ public class mainActivity extends AppCompatActivity {
                                 FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
                                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                                 fragmentTransaction.commit();
+
+
                             }else if("Braches".equals(selectedItem)){
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
                             }else if("Web View".equals(selectedItem)){
