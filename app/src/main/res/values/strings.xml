@@ -21,7 +21,7 @@
     <string name="drawer_item_keyboard_util_drawer_desc">KeyboardUtil to (fix) adjustResize</string>
     <string name="drawer_item_embedded_drawer">Embedded Drawer</string>
     <string name="drawer_item_embedded_drawer_desc">Embed the drawer anywhere</string>
-    <string name="drawer_item_mini_drawer">MiniDrawer</string>
+    <string name="drawer_item_mini_drawer">Sri Lanka Bank Locator</string>
     <string name="drawer_item_mini_drawer_desc">Always visible MiniDrawer</string>
     <string name="drawer_item_fullscreen_drawer">FullScreen Drawer</string>
     <string name="drawer_item_fullscreen_drawer_desc">Drawer in FullScreen activity</string>
@@ -53,4 +53,9 @@
     <string name="yes_stirng">Yes</string>
     <string name="no_string">No</string>
     <string name="exit_message">"Are you sure exit this application "</string>
+    <string name="title_activity_locator_map">Map</string>
+    <string name="title_activity_maps">Map</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

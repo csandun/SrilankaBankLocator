@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -60,7 +61,7 @@ public class mainActivity extends AppCompatActivity {
 
         // Create a few sample profile
         // NOTE you have to define the loader logic too. See the CustomApplication for more details
-        final IProfile profile = new ProfileDrawerItem().withNameShown(true).withName("Bank Of Ceylon").withEmail("http://web.boc.lk/").withIcon(getResources().getDrawable(R.drawable.boc));
+        final IProfile profile = new ProfileDrawerItem().withNameShown(true).withName("Bank Of Ceylon").withIcon(getResources().getDrawable(R.drawable.boc));
 
 
         // Create the AccountHeader
@@ -121,6 +122,10 @@ public class mainActivity extends AppCompatActivity {
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
                             }else if("Locator Map".equals(selectedItem)){
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                                MapFragment fragment = new MapFragment();
+                                FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                                fragmentTransaction.commit();
                             }else if("Braches".equals(selectedItem)){
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
                             }else if("Web View".equals(selectedItem)){
@@ -144,13 +149,13 @@ public class mainActivity extends AppCompatActivity {
         miniResult = result.getMiniDrawer();
 
         //get the widths in px for the first and second panel
-        int firstWidth = (int) UIUtils.convertDpToPixel(200, this);
+        int firstWidth = (int) UIUtils.convertDpToPixel(300, this);
         int secondWidth = (int) UIUtils.convertDpToPixel(72, this);
 
         //create and build our crossfader (see the MiniDrawer is also builded in here, as the build method returns the view to be used in the crossfader)
         //the crossfader library can be found here: https://github.com/mikepenz/Crossfader
         crossFader = new Crossfader()
-                .withContent(findViewById(R.id.crossfade_content))
+                .withContent(findViewById(R.id.fragment_container))
                 .withFirst(result.getSlider(), firstWidth)
                 .withSecond(miniResult.build(this), secondWidth)
                 .withSavedInstance(savedInstanceState)

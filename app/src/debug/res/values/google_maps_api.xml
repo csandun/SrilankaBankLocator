@@ -1,0 +1,21 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=B9:5B:54:69:45:BF:F6:C1:AE:7E:99:AF:12:E1:C6:EC:35:DE:F2:FC%3Bcom.mikepenz.materialdrawer.app.debug
+
+    You can also add your credentials to an existing key, using this line:
+    B9:5B:54:69:45:BF:F6:C1:AE:7E:99:AF:12:E1:C6:EC:35:DE:F2:FC;com.mikepenz.materialdrawer.app.debug
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
+        AIzaSyBHp_pH9ZAkOyk97bYuSMrgOeVuD4DMgkk
+    </string>
+</resources>
