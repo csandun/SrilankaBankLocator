@@ -44,7 +44,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.octicons_typeface_library.Octicons;
 
-public class MiniDrawerActivity extends AppCompatActivity {
+public class mainActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 1;
 
     //save our header or result
@@ -130,12 +130,13 @@ public class MiniDrawerActivity extends AppCompatActivity {
                         new DividerDrawerItem(),
                         new SwitchDrawerItem().withName("Switch").withIcon(Octicons.Icon.oct_tools).withChecked(true).withOnCheckedChangeListener(onCheckedChangeListener),
                         new ToggleDrawerItem().withName("Toggle").withIcon(Octicons.Icon.oct_tools).withChecked(true).withOnCheckedChangeListener(onCheckedChangeListener)
+
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem instanceof Nameable) {
-                            Toast.makeText(MiniDrawerActivity.this, ((Nameable) drawerItem).getName().getText(MiniDrawerActivity.this), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mainActivity.this, ((Nameable) drawerItem).getName().getText(mainActivity.this), Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     }
@@ -226,6 +227,7 @@ public class MiniDrawerActivity extends AppCompatActivity {
         }
     }
 
+    //exit dialog
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {

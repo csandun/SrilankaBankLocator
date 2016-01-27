@@ -10,7 +10,7 @@
         android:label="@string/app_name">
         <!-- android:supportsRtl="true" -->
         <activity
-            android:name=".MiniDrawerActivity"
+            android:name=".mainActivity"
             android:theme="@style/MaterialDrawerTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
