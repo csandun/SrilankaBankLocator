@@ -124,4 +124,22 @@ public class DBHelper extends SQLiteOpenHelper{
 
         db.execSQL("DELETE FROM " + TABLE_BRANCH);
     }
+
+    public Branch getBranch(int code){
+        String selectQuery = "SELECT  * FROM " + TABLE_BRANCH +" WHERE "+KEY_BRANCH_CODE+" = "+code;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        Branch branch = new Branch();
+        branch.setBranchCode(cursor.getInt(0));
+        branch.setBranchName(cursor.getString(1));
+        branch.setLatitude(cursor.getDouble(2));
+        branch.setLongitude(cursor.getDouble(3));
+        branch.setAddress(cursor.getString(4));
+        branch.setAddress(cursor.getString(5));
+        branch.setAddress(cursor.getString(6));
+
+        return branch;
+    }
 }

@@ -1,6 +1,7 @@
 package com.mikepenz.materialdrawer.app;
 
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,7 +27,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -30,8 +44,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,View.On
     GoogleMap mMap;
     DBHelper helper;
     double myLocationLat, myLocationLong;
+    double nearestLat,nearsetLong;
     Marker myMarker;
     Button btSetpath;
+    int branchCode = -1;
+    PolylineOptions lineOptions = null;
 
     public MapFragment() {
         // Required empty public constructor
@@ -50,6 +67,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,View.On
         helper = new DBHelper(getActivity());
 
         btSetpath = (Button) v.findViewById(R.id.btSetpath);
+        btSetpath.setOnClickListener(this);
 
         return v;
     }
@@ -97,7 +115,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,View.On
 
     private void getNearestBranch(){
         double mindistance = 1000000000;
-        int branchCode = -1;
+
 
         List<Branch> allBranches = helper.getAllBranches();
 
@@ -108,7 +126,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,View.On
             if(mindistance>v){
                 mindistance =v;
                 branchCode = b.getBranchCode();
+                nearestLat = b.getLatitude();
+                nearsetLong = b.getLongitude();
+
                 Log.d("Map",String.valueOf(branchCode));
+
             }
         }
         //Log.d("min dis",String.valueOf(mindistance));
@@ -128,15 +150,110 @@ public class MapFragment extends Fragment implements OnMapReadyCallback ,View.On
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
-        switch (v.getId()){
+        Branch b = helper.getBranch(branchCode);
+
+
+        switch (view.getId()){
             case R.id.btSetpath:
+                getNearestBranch();
+                clearMap();
+
+                getPath(new LatLng(myLocationLat,myLocationLong),new LatLng(nearestLat,nearsetLong));
 
                 break;
 
 
         }
+
+    }
+
+    private void getPath(LatLng origin, LatLng dest) {
+
+        // Origin of route
+        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
+
+        // Destination of route
+        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
+
+        // Sensor enabled
+        String sensor = "sensor=false";
+
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+
+        // Output format
+        String output = "json";
+
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+
+        //showDialog();
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url, (String)null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                DirectionsJSONParser parser = new DirectionsJSONParser();
+                List<List<HashMap<String, String>>> r = parser.parse(response);
+
+                List<LatLng> points = null;
+
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                // Traversing through all the routes
+                for (int i = 0; i < r.size(); i++) {
+                    points = new ArrayList<LatLng>();
+                    lineOptions = new PolylineOptions();
+
+                    // Fetching i-th route
+                    List<HashMap<String, String>> path = r.get(i);
+
+                    // Fetching all the points in i-th route
+                    for (int j = 0; j < path.size(); j++) {
+                        HashMap<String, String> point = path.get(j);
+
+                        double lat = Double.parseDouble(point.get("lat"));
+                        double lng = Double.parseDouble(point.get("lng"));
+                        LatLng position = new LatLng(lat, lng);
+
+                        points.add(position);
+                    }
+
+                    // Adding all the points in the route to LineOptions
+                    lineOptions.addAll(points);
+                    lineOptions.width(2);
+                    lineOptions.color(Color.RED);
+                }
+                if (mMap != null) {
+                    // Drawing polyline in the Google Map for the i-th route
+
+                    mMap.addPolyline(lineOptions);
+                }
+
+                //hideDialog();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("APP", "Error: " + error.getMessage());
+                Toast.makeText(getActivity(),
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                // hide the progress dialog
+                //hideDialog();
+            }
+        });
+        // Adding request to request queue
+        queue.add(jsonObjReq);
+    }
+
+    private void clearMap(){
+        mMap.clear();
+        setMarkers();
 
     }
 }
