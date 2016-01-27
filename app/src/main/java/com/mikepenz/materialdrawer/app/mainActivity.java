@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,9 +28,9 @@ import com.mikepenz.materialdrawer.MiniDrawer;
 import com.mikepenz.materialdrawer.app.utils.CrossfadeWrapper;
 import com.mikepenz.materialdrawer.app.utils.SystemUtils;
 import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
@@ -61,12 +60,8 @@ public class mainActivity extends AppCompatActivity {
 
         // Create a few sample profile
         // NOTE you have to define the loader logic too. See the CustomApplication for more details
-        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
-        final IProfile profile2 = new ProfileDrawerItem().withName("Bernat Borras").withEmail("alorma@github.com").withIcon(Uri.parse("https://avatars3.githubusercontent.com/u/887462?v=3&s=460"));
-        final IProfile profile3 = new ProfileDrawerItem().withName("Max Muster").withEmail("max.mustermann@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile2));
-        final IProfile profile4 = new ProfileDrawerItem().withName("Felix House").withEmail("felix.house@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile3));
-        final IProfile profile5 = new ProfileDrawerItem().withName("Mr. X").withEmail("mister.x.super@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile4)).withIdentifier(4);
-        final IProfile profile6 = new ProfileDrawerItem().withName("Batman").withEmail("batman@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile5));
+        final IProfile profile = new ProfileDrawerItem().withNameShown(true).withName("Bank Of Ceylon").withEmail("http://web.boc.lk/").withIcon(getResources().getDrawable(R.drawable.boc));
+
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -74,15 +69,7 @@ public class mainActivity extends AppCompatActivity {
                 .withHeaderBackground(R.drawable.header)
                 .withTranslucentStatusBar(false)
                 .addProfiles(
-                        profile,
-                        profile2,
-                        profile3,
-                        profile4,
-                        profile5,
-                        profile6,
-                        //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
-                        new ProfileSettingDrawerItem().withName("Add Account").withDescription("Add new GitHub Account").withIcon(GoogleMaterial.Icon.gmd_plus).withIdentifier(PROFILE_SETTING),
-                        new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
+                        profile
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -90,7 +77,7 @@ public class mainActivity extends AppCompatActivity {
                         //sample usage of the onProfileChanged listener
                         //if the clicked item has the identifier 1 add a new profile ;)
                         if (profile instanceof IDrawerItem && ((IDrawerItem) profile).getIdentifier() == PROFILE_SETTING) {
-                            IProfile newProfile = new ProfileDrawerItem().withNameShown(true).withName("Batman").withEmail("batman@gmail.com").withIcon(getResources().getDrawable(R.drawable.profile5));
+                            IProfile newProfile = new ProfileDrawerItem().withNameShown(true).withName("Bank Of Ceylon").withIcon(getResources().getDrawable(R.drawable.boc));
                             if (headerResult.getProfiles() != null) {
                                 //we know that there are 2 setting elements. set the new profile above them ;)
                                 headerResult.addProfile(newProfile, headerResult.getProfiles().size() - 2);
@@ -112,9 +99,15 @@ public class mainActivity extends AppCompatActivity {
                 .withTranslucentStatusBar(false)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_compact_header).withIcon(GoogleMaterial.Icon.gmd_sun).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_compact_header).withIcon(GoogleMaterial.Icon.gmd_sun).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_compact_header).withIcon(GoogleMaterial.Icon.gmd_sun).withIdentifier(3)
+                        new PrimaryDrawerItem().withName("Bank Home").withIcon(GoogleMaterial.Icon.gmd_home).withIdentifier(1),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("Locator Map").withIcon(GoogleMaterial.Icon.gmd_google_maps).withIdentifier(2),
+                        new PrimaryDrawerItem().withName("Braches").withIcon(/*R.drawable.ic_account_balance_white*/GoogleMaterial.Icon.gmd_money_box).withIdentifier(3),
+                        new PrimaryDrawerItem().withName("Web View").withIcon(GoogleMaterial.Icon.gmd_view_web).withIdentifier(4),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("Setting").withIcon(GoogleMaterial.Icon.gmd_settings_square).withIdentifier(5)
+
+
 
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -122,7 +115,19 @@ public class mainActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem instanceof Nameable) {
                             Toast.makeText(mainActivity.this, ((Nameable) drawerItem).getName().getText(mainActivity.this), Toast.LENGTH_SHORT).show();
-                            Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+
+                            String selectedItem = ((Nameable) drawerItem).getName().getText(mainActivity.this);
+                            if("Bank Home".equals(selectedItem)){
+                                Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                            }else if("Locator Map".equals(selectedItem)){
+                                Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                            }else if("Braches".equals(selectedItem)){
+                                Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                            }else if("Web View".equals(selectedItem)){
+                                Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                            }else if("Setting".equals(selectedItem)){
+                                Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                            }
 
 
                     }
@@ -139,7 +144,7 @@ public class mainActivity extends AppCompatActivity {
         miniResult = result.getMiniDrawer();
 
         //get the widths in px for the first and second panel
-        int firstWidth = (int) UIUtils.convertDpToPixel(300, this);
+        int firstWidth = (int) UIUtils.convertDpToPixel(200, this);
         int secondWidth = (int) UIUtils.convertDpToPixel(72, this);
 
         //create and build our crossfader (see the MiniDrawer is also builded in here, as the build method returns the view to be used in the crossfader)
