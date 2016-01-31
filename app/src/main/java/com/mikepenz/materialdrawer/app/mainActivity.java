@@ -126,9 +126,10 @@ public class mainActivity extends AppCompatActivity {
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Locator Map").withIcon(GoogleMaterial.Icon.gmd_google_maps).withIdentifier(2),
                         new PrimaryDrawerItem().withName("Braches").withIcon(/*R.drawable.ic_account_balance_white*/GoogleMaterial.Icon.gmd_money_box).withIdentifier(3),
-                        new PrimaryDrawerItem().withName("Web View").withIcon(GoogleMaterial.Icon.gmd_view_web).withIdentifier(4),
+                        new PrimaryDrawerItem().withName("ATM").withIcon(/*R.drawable.ic_account_balance_white*/GoogleMaterial.Icon.gmd_local_atm).withIdentifier(4),
+                        new PrimaryDrawerItem().withName("Web View").withIcon(GoogleMaterial.Icon.gmd_view_web).withIdentifier(5),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("Setting").withIcon(GoogleMaterial.Icon.gmd_settings_square).withIdentifier(5)
+                        new PrimaryDrawerItem().withName("Setting").withIcon(GoogleMaterial.Icon.gmd_settings_square).withIdentifier(6)
 
 
 
@@ -148,9 +149,9 @@ public class mainActivity extends AppCompatActivity {
                                 FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
                                 fragmentTransaction.replace(R.id.fragment_container, fragment);
                                 fragmentTransaction.commit();
-
-
-                            }else if("Braches".equals(selectedItem)){
+                            }else if("Braches".equals(selectedItem)) {
+                                Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                            }else if("ATM".equals(selectedItem)){
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
                             }else if("Web View".equals(selectedItem)){
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
