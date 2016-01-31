@@ -151,8 +151,16 @@ public class mainActivity extends AppCompatActivity {
                                 fragmentTransaction.commit();
                             }else if("Braches".equals(selectedItem)) {
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                                BranchFragment fragment = new BranchFragment();
+                                FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                                fragmentTransaction.commit();
                             }else if("ATM".equals(selectedItem)){
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
+                                ATMFragment fragment = new ATMFragment();
+                                FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.fragment_container, fragment);
+                                fragmentTransaction.commit();
                             }else if("Web View".equals(selectedItem)){
                                 Log.d(LOG_TAG, ((Nameable) drawerItem).getName().getText(mainActivity.this));
                             }else if("Setting".equals(selectedItem)){

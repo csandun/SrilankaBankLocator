@@ -5,4 +5,43 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="#3c3b3b"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:src="@android:drawable/ic_menu_search"
+                android:layout_marginLeft="25dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etSearchATMLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp">
+
+                <EditText
+                    android:id="@+id/etSearchATM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete"
+                    android:hint="@string/searchatm_string"
+                    android:height="50dp"
+                    android:paddingTop="10dp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
 </FrameLayout>
