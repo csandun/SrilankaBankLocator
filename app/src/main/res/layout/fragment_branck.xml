@@ -36,7 +36,8 @@
                     android:inputType="textAutoComplete"
                     android:hint="@string/searchbranch_string"
                     android:height="50dp"
-                    android:paddingTop="10dp" />
+                    android:paddingTop="10dp"
+                    android:drawableRight="@android:drawable/ic_menu_close_clear_cancel"/>
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
