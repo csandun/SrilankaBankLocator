@@ -76,9 +76,7 @@ public class mainActivity extends AppCompatActivity {
         dBhelper.addBranch(b);
         b = new Branch(005,"Dehiwala",6.8618673,79.8615613,"28, Galle Road,Dehiwala","011-7756000","011-4718148");
         dBhelper.addBranch(b);
-        b = new Branch(005,"Dehiwala",6.8618673,79.8615613,"28, Galle Road,Dehiwala","011-7756000","011-4718148");
-        dBhelper.addBranch(b);
-        /////////////////////////////////////
+       /////////////////////////////////////
 
 
         // Create a few sample profile

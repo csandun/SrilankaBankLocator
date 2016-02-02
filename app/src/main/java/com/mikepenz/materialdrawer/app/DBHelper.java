@@ -106,8 +106,8 @@ public class DBHelper extends SQLiteOpenHelper{
                 branch.setLatitude(cursor.getDouble(2));
                 branch.setLongitude(cursor.getDouble(3));
                 branch.setAddress(cursor.getString(4));
-                branch.setAddress(cursor.getString(5));
-                branch.setAddress(cursor.getString(6));
+                branch.setTel(cursor.getString(5));
+                branch.setFax(cursor.getString(6));
 
                 // Adding contact to list
                 contactList.add(branch);
